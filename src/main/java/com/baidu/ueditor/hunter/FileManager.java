@@ -59,7 +59,7 @@ public class FileManager {
             }
             file = (File) obj;
             fileState = new BaseState(true);
-            fileState.putInfo("url", PathFormat.format(EditorController.editorProperties.getLocal().getUrlPrefix() + "/" + PathFormat.format(file.getPath()).replaceFirst(this.rootPath, "")));
+            fileState.putInfo("url", PathFormat.format(EditorController.editorProperties.getLocal().getUrlPrefix() + PathFormat.format(file.getPath()).replaceFirst(this.rootPath, "")));
             state.addState(fileState);
         }
         return state;

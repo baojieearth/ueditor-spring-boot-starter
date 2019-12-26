@@ -5,6 +5,7 @@ import com.baidu.ueditor.define.AppInfo;
 import com.baidu.ueditor.define.BaseState;
 import com.baidu.ueditor.define.FileType;
 import com.baidu.ueditor.define.State;
+import com.baidu.ueditor.spring.EditorController;
 import org.apache.commons.codec.binary.Base64;
 
 import java.util.Map;
@@ -24,10 +25,10 @@ public final class Base64Uploader {
         String savePath = PathFormat.parse((String) conf.get("savePath"),
                 (String) conf.get("filename"));
         savePath = savePath + suffix;
-        String physicalPath = conf.get("rootPath") + savePath;
+        String physicalPath = EditorController.editorProperties.getLocal().getPhysicalPath() + savePath;
         State storageState = StorageManager.saveBinaryFile(data, physicalPath);
         if (storageState.isSuccess()) {
-            storageState.putInfo("url", PathFormat.format(savePath));
+            storageState.putInfo("url", EditorController.editorProperties.getLocal().getUrlPrefix() + PathFormat.format(savePath));
             storageState.putInfo("type", suffix);
             storageState.putInfo("original", "");
         }
