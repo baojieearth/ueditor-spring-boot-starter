@@ -29,7 +29,7 @@ public class EditorController {
     public static EditorProperties editorProperties;
 
     @Autowired
-    public EditorController(EditorProperties editorProperties){
+    public EditorController(EditorProperties editorProperties) {
         EditorController.editorProperties = editorProperties;
     }
 
