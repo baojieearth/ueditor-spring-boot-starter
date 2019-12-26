@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author baojie
+ */
 public class PathFormat {
 	
 	private static final String TIME = "time";
@@ -19,13 +22,13 @@ public class PathFormat {
 	
 	private static Date currentDate = null;
 	
-	public static String parse ( String input ) {
-		Pattern pattern = Pattern.compile( "\\{([^\\}]+)\\}", Pattern.CASE_INSENSITIVE  );
+	public static String parse(String input) {
+		Pattern pattern = Pattern.compile("\\{([^\\}]+)\\}", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(input);
 		PathFormat.currentDate = new Date();
 		StringBuffer sb = new StringBuffer();
-		while ( matcher.find() ) {
-			matcher.appendReplacement(sb, PathFormat.getString( matcher.group( 1 ) ) );
+		while (matcher.find()) {
+			matcher.appendReplacement(sb, PathFormat.getString(matcher.group(1)));
 		}
 		matcher.appendTail(sb);
 		return sb.toString();
@@ -36,12 +39,12 @@ public class PathFormat {
 	 * @param input 待格式化的路径
 	 * @return 格式化后的路径
 	 */
-	public static String format ( String input ) {
-		return input.replace( "\\", "/" );
+	public static String format( String input) {
+		return input.replace("\\", "/");
 	}
 
-	public static String parse ( String input, String filename ) {
-		Pattern pattern = Pattern.compile( "\\{([^\\}]+)\\}", Pattern.CASE_INSENSITIVE  );
+	public static String parse(String input, String filename) {
+		Pattern pattern = Pattern.compile( "\\{([^\\}]+)\\}", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(input);
 		String matchStr = null;
 		PathFormat.currentDate = new Date();

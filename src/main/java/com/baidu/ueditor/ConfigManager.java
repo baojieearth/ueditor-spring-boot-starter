@@ -16,6 +16,7 @@ import java.util.Map;
 public final class ConfigManager {
 
 	private static final String configFileName = "config.json";
+
 	private JSONObject jsonConfig = null;
 
 	/**
@@ -133,6 +134,7 @@ public final class ConfigManager {
 
 	/**
 	 * 读取classpath下的配置文件
+	 * 仅支持classpath下的config.json配置
 	 *
 	 * @return
 	 * @throws IOException
