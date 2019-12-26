@@ -14,6 +14,7 @@ import com.baidu.ueditor.define.BaseState;
 import com.baidu.ueditor.define.MIMEType;
 import com.baidu.ueditor.define.MultiState;
 import com.baidu.ueditor.define.State;
+import com.baidu.ueditor.spring.EditorController;
 import com.baidu.ueditor.upload.StorageManager;
 
 /**
@@ -25,17 +26,14 @@ public class ImageHunter {
 
     private String filename = null;
     private String savePath = null;
-    private String rootPath = null;
     private List<String> allowTypes = null;
     private long maxSize = -1;
 
     private List<String> filters = null;
 
     public ImageHunter(Map<String, Object> conf) {
-
         this.filename = (String) conf.get("filename");
         this.savePath = (String) conf.get("savePath");
-        this.rootPath = (String) conf.get("rootPath");
         this.maxSize = (Long) conf.get("maxSize");
         this.allowTypes = Arrays.asList((String[]) conf.get("allowFiles"));
         this.filters = Arrays.asList((String[]) conf.get("filter"));
@@ -87,12 +85,12 @@ public class ImageHunter {
             }
 
             String savePath = this.getPath(this.savePath, this.filename, suffix);
-            String physicalPath = this.rootPath + savePath;
+            String physicalPath = EditorController.editorProperties.getLocal().getPhysicalPath() + savePath;
 
             State state = StorageManager.saveFileByInputStream(connection.getInputStream(), physicalPath);
 
             if (state.isSuccess()) {
-                state.putInfo("url", PathFormat.format(savePath));
+                state.putInfo("url", EditorController.editorProperties.getLocal().getUrlPrefix() + PathFormat.format(savePath));
                 state.putInfo("source", urlStr);
             }
 
