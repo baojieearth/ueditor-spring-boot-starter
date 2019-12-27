@@ -110,6 +110,11 @@ public final class ConfigManager {
                 conf.put("dir", this.jsonConfig.getString("fileManagerListPath"));
                 conf.put("count", this.jsonConfig.getInt("fileManagerListSize"));
                 break;
+            case ActionMap.LIST_VIDEO:
+                conf.put("allowFiles", this.getArray("videoManagerAllowFiles"));
+                conf.put("dir", this.jsonConfig.getString("videoManagerListPath"));
+                conf.put("count", this.jsonConfig.getInt("videoManagerListSize"));
+                break;
         }
         conf.put("savePath", savePath);
         return conf;

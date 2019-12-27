@@ -74,6 +74,7 @@ public class ActionEnter {
                 state = new ImageHunter(conf).capture(list);
                 break;
             case ActionMap.LIST_IMAGE:
+            case ActionMap.LIST_VIDEO:
             case ActionMap.LIST_FILE:
                 conf = configManager.getConfig(actionCode);
                 state = new FileManager(conf).listFile(this.getStartIndex());
