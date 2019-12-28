@@ -14,6 +14,8 @@ public class EditorProperties {
 
     private Local local;
 
+    private Qiniu qiniu;
+
     /**
      * 上传到本地参数
      */
@@ -29,4 +31,14 @@ public class EditorProperties {
          */
         private String physicalPath = "/";
     }
+
+    @Data
+    public static class Qiniu {
+        private String accessKey;
+        private String secretKey;
+        private String cdn;
+        private String bucket;
+        private String zone;
+    }
+
 }

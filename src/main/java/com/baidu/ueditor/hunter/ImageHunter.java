@@ -85,11 +85,13 @@ public class ImageHunter {
             }
 
             String savePath = this.getPath(this.savePath, this.filename, suffix);
+            //改动 物理地址
             String physicalPath = EditorController.editorProperties.getLocal().getPhysicalPath() + savePath;
 
             State state = StorageManager.saveFileByInputStream(connection.getInputStream(), physicalPath);
 
             if (state.isSuccess()) {
+                //改动前缀
                 state.putInfo("url", EditorController.editorProperties.getLocal().getUrlPrefix() + PathFormat.format(savePath));
                 state.putInfo("source", urlStr);
             }

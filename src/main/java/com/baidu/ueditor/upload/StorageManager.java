@@ -13,6 +13,9 @@ import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
 
+/**
+ * @author baojie
+ */
 public class StorageManager {
     public static final int BUFFER_SIZE = 8192;
 

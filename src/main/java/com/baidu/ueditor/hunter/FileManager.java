@@ -22,6 +22,7 @@ public class FileManager {
     private int count = 0;
 
     public FileManager(Map<String, Object> conf) {
+        //this.rootPath = (String)conf.get("rootPath");
         this.rootPath = PathFormat.format(EditorController.editorProperties.getLocal().getPhysicalPath());
         this.dir = this.rootPath + conf.get("dir");
         this.allowFiles = this.getAllowFiles(conf.get("allowFiles"));
@@ -63,6 +64,27 @@ public class FileManager {
             state.addState(fileState);
         }
         return state;
+    }
+
+    private State getStateOld(Object[] files) {
+        MultiState state = new MultiState(true);
+        BaseState fileState = null;
+        File file = null;
+        for (Object obj : files) {
+            if (obj == null) {
+                break;
+            }
+            file = (File)obj;
+            fileState = new BaseState(true);
+            fileState.putInfo("url", PathFormat.format(this.getPath(file)));
+            state.addState(fileState);
+        }
+        return state;
+    }
+
+    private String getPath(File file) {
+        String path = file.getAbsolutePath();
+        return path.replace(this.rootPath, "/");
     }
 
     private String[] getAllowFiles(Object fileExt) {

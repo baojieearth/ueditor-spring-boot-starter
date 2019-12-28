@@ -25,9 +25,11 @@ public final class Base64Uploader {
         String savePath = PathFormat.parse((String) conf.get("savePath"),
                 (String) conf.get("filename"));
         savePath = savePath + suffix;
+        //物理目录修改成配置
         String physicalPath = EditorController.editorProperties.getLocal().getPhysicalPath() + savePath;
         State storageState = StorageManager.saveBinaryFile(data, physicalPath);
         if (storageState.isSuccess()) {
+            //前缀修改
             storageState.putInfo("url", EditorController.editorProperties.getLocal().getUrlPrefix() + PathFormat.format(savePath));
             storageState.putInfo("type", suffix);
             storageState.putInfo("original", "");

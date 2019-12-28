@@ -8,9 +8,8 @@ import com.baidu.ueditor.define.ActionMap;
 import com.baidu.ueditor.define.AppInfo;
 import com.baidu.ueditor.define.BaseState;
 import com.baidu.ueditor.define.State;
-import com.baidu.ueditor.hunter.FileManager;
-import com.baidu.ueditor.hunter.ImageHunter;
-import com.baidu.ueditor.upload.Uploader;
+import com.baidu.ueditor.spring.EditorController;
+import com.baidu.ueditor.spring.EditorUploader;
 
 /**
  * @author baojie
@@ -58,6 +57,7 @@ public class ActionEnter {
         State state = null;
         int actionCode = ActionMap.getType(this.actionType);
         Map<String, Object> conf = null;
+        EditorUploader uploader = EditorController.editorUploader;
         switch (actionCode) {
             case ActionMap.CONFIG:
                 return this.configManager.getAllConfig().toString();
@@ -66,18 +66,22 @@ public class ActionEnter {
             case ActionMap.UPLOAD_VIDEO:
             case ActionMap.UPLOAD_FILE:
                 conf = this.configManager.getConfig(actionCode);
-                state = new Uploader(request, conf).doExec();
+                if ("true".equals(conf.get("isBase64"))) {
+                    state = uploader.base64Upload(request, conf);
+                } else {
+                    state = uploader.binaryUpload(request, conf);
+                }
                 break;
             case ActionMap.CATCH_IMAGE:
                 conf = configManager.getConfig(actionCode);
                 String[] list = this.request.getParameterValues((String) conf.get("fieldName"));
-                state = new ImageHunter(conf).capture(list);
+                state = uploader.imageHunter(list, conf);
                 break;
             case ActionMap.LIST_IMAGE:
             case ActionMap.LIST_VIDEO:
             case ActionMap.LIST_FILE:
                 conf = configManager.getConfig(actionCode);
-                state = new FileManager(conf).listFile(this.getStartIndex());
+                state = uploader.listFile(this.getStartIndex(), conf);
                 break;
         }
         return state.toJSONString();

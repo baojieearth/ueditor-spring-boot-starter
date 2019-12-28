@@ -1,36 +1,36 @@
 package com.baidu.ueditor.spring;
 
 import com.baidu.ueditor.ActionEnter;
-import com.baidu.ueditor.define.State;
-import com.baidu.ueditor.upload.Base64Uploader;
-import com.baidu.ueditor.upload.BinaryUploader;
+import com.baidu.ueditor.upload.DefaultUploader;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 
 /**
  * @author baojie
  */
+@Slf4j
 @Controller
 @EnableConfigurationProperties(EditorProperties.class)
 public class EditorController {
 
     public static EditorProperties editorProperties;
+    public static EditorUploader editorUploader;
 
     @Autowired
-    public EditorController(EditorProperties editorProperties) {
+    public EditorController(EditorProperties editorProperties, @Lazy EditorUploader editorUploader) {
         EditorController.editorProperties = editorProperties;
+        EditorController.editorUploader = editorUploader;
     }
 
     @RequestMapping({"${ue.server-url}"})
@@ -43,29 +43,14 @@ public class EditorController {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 
-    @Service
+    @Bean
     @ConditionalOnMissingBean(EditorUploader.class)
-    class DefaultEditorConfig implements WebMvcConfigurer {
-
-        @Component
-        class DefaultEditorUploader implements EditorUploader {
-
-            @Override
-            public State binaryUpload(HttpServletRequest request, Map<String, Object> conf) {
-                return BinaryUploader.save(request, conf);
-            }
-
-            @Override
-            public State base64Upload(HttpServletRequest request, Map<String, Object> conf) {
-                String filedName = (String) conf.get("fieldName");
-                return Base64Uploader.save(request.getParameter(filedName), conf);
-            }
-
-        }
+    public DefaultUploader getDefaultUploader(){
+        return new DefaultUploader();
     }
 
 }
