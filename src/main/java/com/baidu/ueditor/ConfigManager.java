@@ -51,7 +51,7 @@ public final class ConfigManager {
     /**
      * 验证配置文件加载是否正确
      *
-     * @return
+     * @return true or false
      */
     public boolean valid() {
         return this.jsonConfig != null;

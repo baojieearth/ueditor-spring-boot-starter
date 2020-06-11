@@ -22,7 +22,7 @@ public class FileType {
      * 根据给定的文件名,获取其后缀信息
      *
      * @param filename
-     * @return
+     * @return 文件名后缀
      */
     public static String getSuffixByFilename(String filename) {
         return filename.substring(filename.lastIndexOf(".")).toLowerCase();

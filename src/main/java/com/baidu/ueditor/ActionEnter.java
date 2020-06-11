@@ -33,7 +33,7 @@ public class ActionEnter {
     /**
      * 入口
      *
-     * @return
+     * @return ''
      */
     public String exec() {
         String callbackName = this.request.getParameter("callback");

@@ -39,7 +39,6 @@ public class QiniuUtils {
      * @param file     上传的文件
      * @param fileName 自定义文件名
      * @return java.lang.String
-     * @author lihy
      */
     public static String upload(MultipartFile file, String fileName) {
         String zoneStr = EditorController.editorProperties.getQiniu().getZone();
@@ -72,7 +71,6 @@ public class QiniuUtils {
      * @param inputStream 上传的文件流
      * @param fileName    自定义文件名
      * @return java.lang.String
-     * @author lihy
      */
     public static String upload(InputStream inputStream, String fileName) {
         String zoneStr = EditorController.editorProperties.getQiniu().getZone();
@@ -108,7 +106,6 @@ public class QiniuUtils {
      * @param content  图片内筒
      * @param fileName 自定义文件名
      * @return java.lang.String
-     * @author lihy
      */
     public static String upload(String content, String fileName) {
         String zoneStr = EditorController.editorProperties.getQiniu().getZone();
@@ -145,7 +142,6 @@ public class QiniuUtils {
      * @param size   返回条数
      * @param total  总条数
      * @return 文件列表
-     * @author lihy
      */
     public static List<String> listFile(String prefix, int index, int size, Total total) {
         // 构造一个带指定Zone对象的配置类
@@ -182,7 +178,6 @@ public class QiniuUtils {
      *
      * @param name zone name
      * @return com.qiniu.common.Zone
-     * @author lihy
      */
     static Zone getByName(String name) {
         Zone zone = null;
